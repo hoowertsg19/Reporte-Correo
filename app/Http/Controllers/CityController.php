@@ -12,8 +12,13 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
-        return view('cities.index', compact('cities'));
+        try {
+            $cities = City::all()->sortBy('name');
+            $count = $cities->count();
+            return view('cities.index', compact('cities', 'count'));
+        } catch (\Exception $e) {
+            return redirect()->route('cities.index')->with('error', 'Error fetching cities: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -21,7 +26,11 @@ class CityController extends Controller
      */
     public function create()
     {
-        return view('cities.create');
+        try {
+            return view('cities.create');
+        } catch (\Exception $e) {
+            return redirect()->route('cities.index')->with('error', 'Error creating city: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -29,9 +38,13 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        City::create($request->all());
+        try {
+            City::create($request->all());
 
-        return redirect()->route('cities.index')->with('success', 'City created successfully.');
+            return redirect()->route('cities.index')->with('success', 'City created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('cities.create')->with('error', 'Error creating city: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -40,8 +53,12 @@ class CityController extends Controller
     public function show(string $id)
     {
         //
-        $city = City::findOrFail($id);
-        return view('cities.show', compact('city'));
+        try {
+            $city = City::findOrFail($id);
+            return view('cities.show', compact('city'));
+        } catch (\Exception $e) {
+            return redirect()->route('cities.index')->with('error', 'Error fetching city: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -50,8 +67,12 @@ class CityController extends Controller
     public function edit(string $id)
     {
         //
-        $city = City::findOrFail($id);
-        return view('cities.edit', compact('city'));
+        try {
+            $city = City::findOrFail($id);
+            return view('cities.edit', compact('city'));
+        } catch (\Exception $e) {
+            return redirect()->route('cities.index')->with('error', 'Error fetching city: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -60,9 +81,13 @@ class CityController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $city = City::findOrFail($id);
-        $city->update($request->all());
-        return redirect()->route('cities.index')->with('success', 'City updated successfully.');
+        try {
+            $city = City::findOrFail($id);
+            $city->update($request->all());
+            return redirect()->route('cities.index')->with('success', 'City updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('cities.edit', $id)->with('error', 'Error updating city: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -71,8 +96,12 @@ class CityController extends Controller
     public function destroy(string $id)
     {
         //
-        $city = City::findOrFail($id);
-        $city->delete();
-        return redirect()->route('cities.index')->with('success', 'City deleted successfully.');
+        try {
+            $city = City::findOrFail($id);
+            $city->delete();
+            return redirect()->route('cities.index')->with('success', 'City deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('cities.index')->with('error', 'Error deleting city: ' . $e->getMessage());
+        }
     }
 }
