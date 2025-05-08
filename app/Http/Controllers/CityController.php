@@ -13,8 +13,8 @@ class CityController extends Controller
     public function index()
     {
         try {
-            $cities = City::all()->sortBy('name');
-            $count = $cities->count();
+            $cities = City::orderBy('name')->paginate(6);
+            $count = $cities->total();
             return view('cities.index', compact('cities', 'count'));
         } catch (\Exception $e) {
             return redirect()->route('cities.index')->with('error', 'Error fetching cities: ' . $e->getMessage());

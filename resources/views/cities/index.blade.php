@@ -71,7 +71,12 @@
                         </div>
                     </div>
                 @endforeach
+
+                
             </div>
+            <div class="mt-6">
+                    {{ $cities->links() }}
+                </div>
         </div>
     </div>
 </x-app-layout>
