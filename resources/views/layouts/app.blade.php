@@ -13,7 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
+        <script src="https://cdn.tailwindcss.com"></script>       
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -33,6 +34,35 @@
                 {{ $slot }}
             </main>
         </div>
-        <script src="https://cdn.tailwindcss.com"></script>
+
+        
+        @if(session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ __('Success')}}',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    position: 'top-end',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            </script>
+        @endif
+
+        @if(session('error'))
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '{{ session('error') }}',
+                    confirmButtonColor: '#d33'
+                });
+            </script>
+        @endif
+        
     </body>
 </html>

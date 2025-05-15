@@ -14,7 +14,7 @@ class CitizenController extends Controller
     public function index()
     {
         try {
-            $citizens = Citizen::orderBy('first_name', 'desc')->paginate(10);
+            $citizens = Citizen::orderBy('first_name', 'asc')->paginate(10);
             return view('citizens.index', compact('citizens'));
         } catch (\Exception $e) {
             return redirect()->route('dashboard')->with('error', __('Failed to fetch citizens.'));
