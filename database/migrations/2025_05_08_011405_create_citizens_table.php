@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('last_name');
             $table->enum('gender', ['MASCULINO', 'FEMENINO'])->default('FEMENINO');
             $table->date('birth_date');
-            $table->unsignedBigInteger('city_id');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
+            //relacion con la tabla de ciudades
+            $table->foreignId('city_id')->constrained('cities')->onDelete('cascade');
+
+            // $table->unsignedBigInteger('city_id');
+            // $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
 
             $table->timestamps();
         });

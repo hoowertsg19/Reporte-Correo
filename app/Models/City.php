@@ -8,4 +8,9 @@ class City extends Model
 {
     protected $fillable = ['name', 'description'];
 
+    public function citizens()
+    {
+        return $this->hasMany(Citizen::class);
+    }
+
 }
