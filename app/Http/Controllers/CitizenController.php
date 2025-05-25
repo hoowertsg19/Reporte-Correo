@@ -103,14 +103,11 @@ class CitizenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        try {
-            $citizen = Citizen::findOrFail($id);
-            $citizen->delete();
-            return redirect()->route('citizens.index')->with('success', __('Citizen deleted successfully.'));
-        } catch (\Exception $e) {
-            return redirect()->route('citizens.index')->with('error', __('Failed to delete citizen.'));
-        }
+        $citizen = Citizen::findOrFail($id);
+        $citizen->delete();
+
+        return redirect()->route('citizens.index')->with('success', 'Citizen deleted successfully.');
     }
 }

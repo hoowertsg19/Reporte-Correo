@@ -4,10 +4,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CitizenController;
+use App\Http\Controllers\ReportCitizenController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -19,10 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::resource('citizens', CitizenController::class);
-    Route::resource('cities', CityController::class);
-});
+// Duplicate route definitions removed
 
 // Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
 // Route::get('/cities/create', [CityController::class, 'create'])->name('cities.create');
@@ -33,5 +32,16 @@ Route::middleware('auth')->group(function () {
 // Route::delete('/cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
 
 
+Route::middleware('auth')->group(function () {
+    Route::resource('cities', CityController::class);
+    Route::resource('citizens', CitizenController::class);
+
+    // dashboard de reportes
+    Route::get('report', [ReportCitizenController::class, 'index'])
+         ->name('report.dashboard');
+    // envío de mail
+    Route::post('report/send', [ReportCitizenController::class, 'send_report'])
+         ->name('report.send');
+});
 
 require __DIR__.'/auth.php';
