@@ -79,4 +79,20 @@
                 </div>
         </div>
     </div>
+    @if(session('success'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                    popup: 'rounded-xl'
+                }
+            });
+        });
+    </script>
+@endif
 </x-app-layout>

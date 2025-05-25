@@ -8,3 +8,109 @@
         @apply bg-blue-500 !important;
     }
 }
+
+/* From Uiverse.io by joe-watson-sbf */ 
+.card {
+  width: 210px;
+  height: 254px;
+  border-radius: 4px;
+  background: #212121;
+  display: flex;
+  gap: 5px;
+  padding: .4em;
+}
+
+.card p {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all .5s;
+  background: #212121;
+  border: 1px solid #ff5a91;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card p:hover {
+  flex: 4;
+}
+
+.card p span {
+  min-width: 14em;
+  padding: .5em;
+  text-align: center;
+  transform: rotate(-90deg);
+  transition: all .5s;
+  text-transform: uppercase;
+  color: #ff568e;
+  letter-spacing: .1em;
+}
+
+.card p:hover span {
+  transform: rotate(0);
+}
+
+body {
+    background-color: #1a202c; /* Dark background */
+    color: #e2e8f0; /* Light text color */
+}
+
+.bg-white {
+    background-color: #2d3748 !important; /* Dark card background */
+}
+
+.text-gray-800 {
+    color: #e2e8f0 !important; /* Light text color */
+}
+
+.text-gray-500 {
+    color: #a0aec0 !important; /* Muted text color */
+}
+
+.text-gray-400 {
+    color: #718096 !important; /* Subtle text color */
+}
+
+.bg-gray-50 {
+    background-color: #4a5568 !important; /* Slightly lighter dark background */
+}
+
+.bg-gray-300 {
+    background-color: #718096 !important; /* Muted button background */
+}
+
+.hover\:bg-gray-400:hover {
+    background-color: #a0aec0 !important; /* Hover effect for muted button */
+}
+
+.bg-blue-600 {
+    background-color: #3182ce !important; /* Adjusted blue for dark mode */
+}
+
+.hover\:bg-blue-700:hover {
+    background-color: #2b6cb0 !important; /* Hover effect for blue button */
+}
+
+.bg-yellow-400 {
+    background-color: #ecc94b !important; /* Adjusted yellow for dark mode */
+}
+
+.hover\:bg-yellow-500:hover {
+    background-color: #d69e2e !important; /* Hover effect for yellow button */
+}
+
+.bg-red-600 {
+    background-color: #e53e3e !important; /* Adjusted red for dark mode */
+}
+
+.hover\:bg-red-700:hover {
+    background-color: #c53030 !important; /* Hover effect for red button */
+}
+
+.bg-black {
+    background-color: rgba(0, 0, 0, 0.8) !important; /* Modal background */
+}
+
