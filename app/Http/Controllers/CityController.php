@@ -98,8 +98,17 @@ class CityController extends Controller
         //
         try {
             $city = City::findOrFail($id);
+
+            // Verifica si la ciudad tiene ciudadanos
+            if ($city->citizens()->count() > 0) {
+                return redirect()->route('cities.index')
+                    ->with('error', 'No puedes eliminar una ciudad que tiene ciudadanos registrados.');
+            }
+
             $city->delete();
-            return redirect()->route('cities.index')->with('success', 'City deleted successfully.');
+
+            return redirect()->route('cities.index')
+                ->with('success', 'Ciudad eliminada correctamente.');
         } catch (\Exception $e) {
             return redirect()->route('cities.index')->with('error', 'Error deleting city: ' . $e->getMessage());
         }
