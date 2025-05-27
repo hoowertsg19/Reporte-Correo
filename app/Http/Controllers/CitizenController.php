@@ -11,11 +11,23 @@ class CitizenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $citizens = Citizen::orderBy('first_name', 'asc')->paginate(10);
-            return view('citizens.index', compact('citizens'));
+            $search = $request->input('search');
+
+            $citizens = Citizen::with('city')
+                ->when($search, function ($query, $search) {
+                    $query->where('first_name', 'LIKE', "%{$search}%")
+                          ->orWhere('last_name', 'LIKE', "%{$search}%")
+                          ->orWhereHas('city', function ($q) use ($search) {
+                              $q->where('name', 'LIKE', "%{$search}%");
+                          });
+                })
+                ->orderBy('first_name', 'asc')
+                ->paginate(10);
+
+            return view('citizens.index', compact('citizens', 'search'));
         } catch (\Exception $e) {
             return redirect()->route('dashboard')->with('error', __('Failed to fetch citizens.'));
         }

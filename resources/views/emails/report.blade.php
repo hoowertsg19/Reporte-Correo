@@ -7,117 +7,125 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body {
-            background: #f4f6fb;
-            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f2f4f8;
             margin: 0;
-            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
         }
-        .email-container {
-            max-width: 540px;
+        .container {
+            max-width: 600px;
             margin: 40px auto;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 6px 24px rgba(44, 62, 80, 0.10), 0 1.5px 6px rgba(44, 62, 80, 0.08);
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             overflow: hidden;
-            border: 1px solid #e3e8ee;
+            border: 1px solid #e2e8f0;
         }
-        .email-header {
-            background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
-            color: #fff;
-            padding: 32px 24px 18px 24px;
+        .header {
+            background: #1e40af;
+            color: #ffffff;
+            padding: 28px 24px;
             text-align: center;
         }
-        .email-header h1 {
+        .header h1 {
             margin: 0;
-            font-size: 2.1rem;
-            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.9rem;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 700;
-            letter-spacing: 1px;
         }
-        .email-body {
-            padding: 32px 24px 24px 24px;
-            color: #22223b;
-            font-size: 1.08rem;
-            line-height: 1.7;
+        .content {
+            padding: 24px;
+            font-size: 1rem;
+            color: #1f2937;
         }
-        .email-body p {
-            margin: 0 0 18px 0;
+        .content h2 {
+            font-size: 1.2rem;
+            color: #2563eb;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 8px;
         }
-        .stats-table {
+        .content table {
             width: 100%;
             border-collapse: collapse;
-            margin: 18px 0 10px 0;
-            font-size: 1rem;
+            margin-top: 16px;
         }
-        .stats-table th, .stats-table td {
-            border: 1px solid #e3e8ee;
-            padding: 10px 12px;
+        .content th, .content td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
             text-align: left;
+            font-size: 0.96rem;
         }
-        .stats-table th {
-            background: #2563eb;
-            color: #fff;
-            font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 600;
+        .content th {
+            background-color: #2563eb;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
         }
-        .stats-table td {
+        .city-table {
+            margin-top: 28px;
+        }
+        .footer {
             background: #f8fafc;
-        }
-        .email-footer {
-            background: #f1f5f9;
-            color: #64748b;
             text-align: center;
-            font-size: 0.97rem;
-            padding: 18px 10px;
-            border-top: 1px solid #e3e8ee;
-            font-family: 'Roboto', Arial, sans-serif;
+            font-size: 0.9rem;
+            color: #6b7280;
+            padding: 16px;
+            border-top: 1px solid #e5e7eb;
         }
         @media (max-width: 600px) {
-            .email-container {
-                margin: 0;
+            .container {
                 border-radius: 0;
+                margin: 0;
             }
-            .email-header, .email-body, .email-footer {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            .stats-table th, .stats-table td {
-                padding: 8px 6px;
+            .content, .header, .footer {
+                padding-left: 16px;
+                padding-right: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="email-container">
-        <div class="email-header">
-            <h1>Reporte de Ciudadanos y Ciudades</h1>
+    <div class="container">
+        <div class="header">
+            <h1>Reporte de Ciudadanos</h1>
         </div>
-        <div class="email-body">
-            <p style="font-family:'Montserrat',Arial,sans-serif;font-size:1.1rem;font-weight:600;color:#2563eb;margin-bottom:10px;">
-                ¡Hola {{ $userName ?? 'usuario' }}! Aquí tienes el resumen actualizado:
-            </p>
-            <table class="stats-table" width="100%" cellpadding="0" cellspacing="0">
+        <div class="content">
+            <h2>Hola {{ $userName ?? 'usuario' }},</h2>
+            <p>Este es el resumen actualizado del sistema:</p>
+
+            <table>
                 <tr>
-                    <th style="text-align:left;padding:8px;">Total de ciudades</th>
-                    <td style="padding:8px;">{{ $totalCities }}</td>
+                    <th>Total de ciudades</th>
+                    <td>{{ $totalCities }}</td>
                 </tr>
                 <tr>
-                    <th style="text-align:left;padding:8px;">Total de ciudadanos</th>
-                    <td style="padding:8px;">{{ $totalCitizens }}</td>
+                    <th>Total de ciudadanos</th>
+                    <td>{{ $totalCitizens }}</td>
                 </tr>
             </table>
-            <p style="margin-top:24px;font-size:0.98rem;color:#64748b;">
-                Si tienes dudas o necesitas más información, responde a este correo.
-            </p>
-            <h4 style="margin-top:20px;">Cuántos por ciudad:</h4>
-            <ul>
-                @foreach($citiesWithCitizens as $city)
-                    <li>{{ $city->name }}: {{ $city->citizens_count }}</li>
-                @endforeach
-            </ul>
+
+            <div class="city-table">
+                <h2 style="margin-top: 30px;">Ciudadanos por Ciudad</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ciudad</th>
+                            <th>Cantidad de ciudadanos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($citiesWithCitizens as $city)
+                            <tr>
+                                <td>{{ $city->name }}</td>
+                                <td>{{ $city->citizens_count }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <p style="margin-top: 30px;">Si necesitas más detalles, no dudes en responder este correo.</p>
         </div>
-        <div class="email-footer">
-            <p>&copy; {{ date('Y') }} GrossInc. Todos los derechos reservados.</p>
+        <div class="footer">
+            &copy; {{ date('Y') }} Dashboard de Ciudadanos. Todos los derechos reservados.
         </div>
     </div>
 </body>

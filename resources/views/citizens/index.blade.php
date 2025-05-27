@@ -14,6 +14,18 @@
         <div class="max-w-4xl mx-auto px-4">
             <div class="bg-white dark:bg-gray-900 shadow-2xl rounded-xl p-6">
                 <div class="space-y-4">
+
+                    <!-- Barra de búsqueda -->
+                    <form method="GET" action="{{ route('citizens.index') }}" class="mb-6">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ $search ?? '' }}"
+                            placeholder="Buscar por nombre o ciudad..."
+                            class="w-full md:w-1/2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                        >
+                    </form>
+
                     @forelse($citizens as $citizen)
                         <div class="flex flex-col md:flex-row md:items-center justify-between bg-gray-50 dark:bg-gray-800 rounded-lg p-4 shadow-md hover:shadow-xl transition border border-gray-100 dark:border-gray-700">
                             <div class="flex-1">
@@ -27,6 +39,7 @@
                                 <button type="button" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 shadow transition text-sm" onclick="openModal('modal-{{ $citizen->id }}')">
                                     Eliminar
                                 </button>
+
                                 <!-- Modal -->
                                 <div id="modal-{{ $citizen->id }}" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 hidden">
                                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-sm border border-gray-200 dark:border-gray-700">
@@ -44,6 +57,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <script>
                             function openModal(id) {
                                 document.getElementById(id).classList.remove('hidden');
@@ -58,8 +72,9 @@
                         </div>
                     @endforelse
                 </div>
+
                 <div class="mt-8">
-                    {{ $citizens->links() }}
+                    {{ $citizens->appends(['search' => $search])->links() }}
                 </div>
             </div>
         </div>
