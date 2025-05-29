@@ -32,6 +32,14 @@ Route::middleware('auth')->group(function () {
     // envío de mail
     Route::post('report/send', [ReportCitizenController::class, 'send_report'])
          ->name('report.send');
+    Route::post('report/pdf-send', [ReportCitizenController::class, 'exportPdfAndSend'])
+         ->name('report.pdfsend');
+    Route::post('/report/send-basic', [ReportCitizenController::class, 'send_report_basic'])->name('report.send.basic');
 });
+
+Route::get('/report/clear-success', function() {
+    session()->forget('success');
+    return response()->json(['cleared' => true]);
+})->name('report.clear.success');
 
 require __DIR__.'/auth.php';
