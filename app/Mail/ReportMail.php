@@ -13,27 +13,37 @@ class ReportMail extends Mailable
     public $totalCities;
     public $totalCitizens;
     public $citiesWithCitizens;
+    public $fileContent;
+    public $fileName;
+    public $subjectLine;
 
-    public function __construct(
-        $totalCities,
-        $totalCitizens,
-        $citiesWithCitizens,
-        $subject = 'Reporte de Ciudadanos y Ciudades'
-    ) {
+    public function __construct($totalCities, $totalCitizens, $citiesWithCitizens, $fileContent, $fileName = 'reporte.pdf', $subjectLine = 'Reporte de Ciudadanos y Ciudades')
+    {
         $this->totalCities        = $totalCities;
         $this->totalCitizens      = $totalCitizens;
         $this->citiesWithCitizens = $citiesWithCitizens;
-        $this->subject($subject);
+        $this->fileContent        = $fileContent;
+        $this->fileName           = $fileName;
+        $this->subjectLine        = $subjectLine;
     }
 
     public function build()
     {
-        return $this
-            ->view('emails.report')
+        $email = $this->view('emails.report')
+            ->subject($this->subjectLine)
             ->with([
                 'totalCities'        => $this->totalCities,
                 'totalCitizens'      => $this->totalCitizens,
                 'citiesWithCitizens' => $this->citiesWithCitizens,
             ]);
+
+        // Adjunta solo si hay archivo
+        if ($this->fileContent && $this->fileName) {
+            $email->attachData($this->fileContent, $this->fileName, [
+                'mime' => 'application/pdf',
+            ]);
+        }
+
+        return $email;
     }
 }
